@@ -37,7 +37,7 @@ services:
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        value: dpg-cucmpi1opnds73aja8j0-a
+        value: dpg-cucmpi1opnds73aja8j0-a.oregon-postgres.render.com
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
@@ -64,3 +64,4 @@ services:
       # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
+
