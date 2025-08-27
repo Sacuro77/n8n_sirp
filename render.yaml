@@ -1,18 +1,19 @@
 
+# Blueprint para desplegar n8n en Render con Postgres externo
+# Mantiene solo un servicio (n8n-sirp) y no crea duplicados
+
 services:
   - type: web
     name: n8n-sirp
-    plan: standard
     runtime: image
     image:
-      url: docker.io/n8nio/n8n:1.109.1
+      url: docker.io/n8nio/n8n:1.109.1   # Usa versión fija (no latest)
+    plan: standard
+    autoDeploy: true
+    healthCheckPath: /healthz/readiness
 
     envVars:
-      # ===== Seguridad =====
-      - key: N8N_ENCRYPTION_KEY
-        sync: false    # tu clave: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
-
-      # ===== Configuración n8n =====
+      # ===== Core =====
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_HOST
@@ -24,25 +25,27 @@ services:
       - key: N8N_EDITOR_BASE_URL
         value: https://n8n-sirp.onrender.com
 
+      # ===== Seguridad =====
+      - key: N8N_ENCRYPTION_KEY
+        sync: false   # 👉 aquí pones tu clave actual: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
+
       # ===== Zona horaria =====
-      - key: GENERIC_TIMEZONE
-        value: America/Guayaquil
       - key: TZ
         value: America/Guayaquil
 
-      # ===== Base de datos Postgres existente =====
+      # ===== Base de datos Postgres externo =====
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        sync: false    # dpg-cucmpi1opnds73aja8j0-a.render.com
+        value: dpg-cucmpi1opnds73aja8j0-a
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
-        sync: false    # bdn8n_d0q0
+        value: bdn8n_d0q0
       - key: DB_POSTGRESDB_USER
-        sync: false    # bdn8n_d0q0_user
+        value: bdn8n_d0q0_user
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false
+        sync: false   # 👉 aquí pones tu contraseña: bN1VYSmW1BaUUo5nbbQD15ieKoT8VM7q
       - key: DB_POSTGRESDB_SSL
         value: "true"
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
@@ -54,12 +57,10 @@ services:
       - key: WEBHOOK_TUNNEL_URL
         value: https://n8n-sirp.onrender.com
 
-      # ===== Otros ajustes =====
-      - key: N8N_METRICS
-        value: "true"
-      - key: QUEUE_HEALTH_CHECK_ACTIVE
-        value: "true"
+      # ===== Node =====
       - key: NODE_VERSION
         value: "20.18.2"
+
+      # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
