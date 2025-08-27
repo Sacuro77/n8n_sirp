@@ -17,13 +17,13 @@ services:
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_HOST
-        value: n8n-sirp.onrender.com
+        value: n8n-sirp-o2re.onrender.com
       - key: N8N_PORT
         value: "5678"
       - key: N8N_API_URL
-        value: https://n8n-sirp.onrender.com
+        value: https://n8n-sirp-o2re.onrender.com
       - key: N8N_EDITOR_BASE_URL
-        value: https://n8n-sirp.onrender.com
+        value: https://n8n-sirp-o2re.onrender.com
 
       # ===== Seguridad =====
       - key: N8N_ENCRYPTION_KEY
@@ -53,7 +53,7 @@ services:
 
       # ===== Webhooks =====
       - key: WEBHOOK_URL
-        value: https://n8n-sirp.onrender.com/
+        value: https://n8n-sirp-o2re.onrender.com
       - key: WEBHOOK_TUNNEL_URL
         value: https://n8n-sirp.onrender.com
 
@@ -64,4 +64,5 @@ services:
       # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
+
 
