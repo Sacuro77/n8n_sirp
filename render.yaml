@@ -11,13 +11,14 @@
 
 # Blueprint para desplegar n8n en Render con Postgres existente
 
+# Blueprint para desplegar n8n en Render con Postgres existente
+
 services:
   - type: web
     name: n8n-sirp
     runtime: image
     image:
-      # Usa versión fija para estabilidad (puedes cambiar a "stable" si prefieres)
-      url: docker.io/n8nio/n8n:1.109.1
+      url: docker.io/n8nio/n8n:1.109.1   # versión estable
     plan: standard
     autoDeploy: true
     healthCheckPath: /healthz/readiness
@@ -37,7 +38,7 @@ services:
 
       # ===== Seguridad =====
       - key: N8N_ENCRYPTION_KEY
-        sync: false   # Pega aquí tu clave actual de .env al hacer deploy
+        sync: false   # pones tu clave actual: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
 
       # ===== Zona horaria =====
       - key: GENERIC_TIMEZONE
@@ -49,15 +50,15 @@ services:
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        sync: false   # Hostname de tu DB en Render
+        sync: false   # dpg-cucmpi1opnds73aja8j0-a
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
-        sync: false   # Nombre de la DB
+        sync: false   # bdn8n_d0q0
       - key: DB_POSTGRESDB_USER
-        sync: false   # Usuario
+        sync: false   # bdn8n_d0q0_user
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false   # Contraseña
+        sync: false   # bN1VYSmW1BaUUo5nbbQD15ieKoT8VM7q
 
       # ===== Webhooks =====
       - key: WEBHOOK_URL
