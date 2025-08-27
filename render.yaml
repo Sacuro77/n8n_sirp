@@ -7,19 +7,21 @@
 # can upgrade to paid instance types at any time to
 # increase resources.
 
+# Blueprint para desplegar n8n en Render con Postgres ya existente
+
 services:
   - type: web
     name: n8n-sirp
     runtime: image
     image:
-      # Usa una versión estable. Evita "latest" para que las actualizaciones sean controladas
+      # Usa una versión estable, evita "latest"
       url: docker.io/n8nio/n8n:1.109.1
-    plan: standard      # 2GB RAM para asegurar que compile bien; luego puedes bajar a starter
+    plan: standard    # 2 GB RAM recomendado para evitar errores de build
     autoDeploy: true
     healthCheckPath: /healthz/readiness
 
     envVars:
-      # ===== Configuración core =====
+      # ===== Core =====
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_HOST
@@ -33,7 +35,7 @@ services:
 
       # ===== Seguridad =====
       - key: N8N_ENCRYPTION_KEY
-        sync: false   # Render te pedirá tu clave actual (la que tienes en .env)
+        sync: false   # pon aquí tu clave actual (la del .env)
 
       # ===== Zona horaria =====
       - key: GENERIC_TIMEZONE
@@ -45,15 +47,15 @@ services:
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        sync: false   # Render te pedirá el host (ej: dpg-cucmpi1opnds73aja8j0-a)
+        sync: false   # ej: dpg-cucmpi1opnds73aja8j0-a
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
-        sync: false   # Render te pedirá el nombre de tu DB (ej: bdn8n_d0q0)
+        sync: false   # ej: bdn8n_d0q0
       - key: DB_POSTGRESDB_USER
-        sync: false   # Render te pedirá el usuario (ej: bdn8n_d0q0_user)
+        sync: false   # ej: bdn8n_d0q0_user
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false   # Render te pedirá la contraseña
+        sync: false   # tu password de Render
 
       # ===== Webhooks =====
       - key: WEBHOOK_URL
@@ -67,6 +69,8 @@ services:
       - key: QUEUE_HEALTH_CHECK_ACTIVE
         value: "true"
 
-      # ===== Versión Node =====
+      # ===== Node.js =====
       - key: NODE_VERSION
         value: "20.18.2"
+
+
