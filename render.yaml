@@ -1,30 +1,18 @@
-# Use this Blueprint to deploy n8n on Render as a web
-# service that uses a Postgres database to store
-# workflow data.
-#
-# This Blueprint uses free instance types (specified by
-# `plan`) for both the web service and the database. You
-# can upgrade to paid instance types at any time to
-# increase resources.
-
-# Blueprint para desplegar n8n en Render con Postgres ya existente
-
-# Blueprint para desplegar n8n en Render con Postgres existente
-
-# Blueprint para desplegar n8n en Render con Postgres existente
 
 services:
   - type: web
     name: n8n-sirp
+    plan: standard
     runtime: image
     image:
-      url: docker.io/n8nio/n8n:1.109.1   # versión estable
-    plan: standard
-    autoDeploy: true
-    healthCheckPath: /healthz/readiness
+      url: docker.io/n8nio/n8n:1.109.1
 
     envVars:
-      # ===== Core =====
+      # ===== Seguridad =====
+      - key: N8N_ENCRYPTION_KEY
+        sync: false    # tu clave: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
+
+      # ===== Configuración n8n =====
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_HOST
@@ -36,29 +24,29 @@ services:
       - key: N8N_EDITOR_BASE_URL
         value: https://n8n-sirp.onrender.com
 
-      # ===== Seguridad =====
-      - key: N8N_ENCRYPTION_KEY
-        sync: false   # pones tu clave actual: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
-
       # ===== Zona horaria =====
       - key: GENERIC_TIMEZONE
         value: America/Guayaquil
       - key: TZ
         value: America/Guayaquil
 
-      # ===== Base de datos Postgres =====
+      # ===== Base de datos Postgres existente =====
       - key: DB_TYPE
         value: postgresdb
       - key: DB_POSTGRESDB_HOST
-        sync: false   # dpg-cucmpi1opnds73aja8j0-a
+        sync: false    # dpg-cucmpi1opnds73aja8j0-a.render.com
       - key: DB_POSTGRESDB_PORT
         value: "5432"
       - key: DB_POSTGRESDB_DATABASE
-        sync: false   # bdn8n_d0q0
+        sync: false    # bdn8n_d0q0
       - key: DB_POSTGRESDB_USER
-        sync: false   # bdn8n_d0q0_user
+        sync: false    # bdn8n_d0q0_user
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false   # bN1VYSmW1BaUUo5nbbQD15ieKoT8VM7q
+        sync: false
+      - key: DB_POSTGRESDB_SSL
+        value: "true"
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
 
       # ===== Webhooks =====
       - key: WEBHOOK_URL
@@ -66,16 +54,12 @@ services:
       - key: WEBHOOK_TUNNEL_URL
         value: https://n8n-sirp.onrender.com
 
-      # ===== Health/metrics =====
+      # ===== Otros ajustes =====
       - key: N8N_METRICS
         value: "true"
       - key: QUEUE_HEALTH_CHECK_ACTIVE
         value: "true"
-
-      # ===== Node =====
       - key: NODE_VERSION
         value: "20.18.2"
-
-      # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
