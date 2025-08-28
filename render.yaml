@@ -45,7 +45,7 @@ services:
       - key: DB_POSTGRESDB_USER
         value: bdn8n_d0q0_user
       - key: DB_POSTGRESDB_PASSWORD
-        sync: false   # 👉 aquí pones tu contraseña: bN1VYSmW1BaUUo5nbbQD15ieKoT8VM7q
+        sync: false
       - key: DB_POSTGRESDB_SSL
         value: "true"
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
@@ -64,6 +64,7 @@ services:
       # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
+
 
 
 
