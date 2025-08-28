@@ -27,7 +27,7 @@ services:
 
       # ===== Seguridad =====
       - key: N8N_ENCRYPTION_KEY
-        sync: false   # 👉 aquí pones tu clave actual: 3f2b8e91d5f6a7c8e9d4a3b2f1c0d9e8
+        sync: false
 
       # ===== Zona horaria =====
       - key: TZ
@@ -64,5 +64,6 @@ services:
       # ===== Ajuste de permisos =====
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
         value: "true"
+
 
 
